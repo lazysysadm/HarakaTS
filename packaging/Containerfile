@@ -1,0 +1,18 @@
+FROM docker.io/library/debian:bookworm
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt-get update && apt-get install -y --no-install-recommends \
+      build-essential curl wget file pkg-config ca-certificates git \
+      libwebkit2gtk-4.1-dev libgtk-3-dev libsoup-3.0-dev libvte-2.91-dev \
+      libjavascriptcoregtk-4.1-dev librsvg2-dev libssl-dev libdbus-1-dev \
+      openssh-server openssh-client xz-utils unzip rpm \
+    && rm -rf /var/lib/apt/lists/*
+RUN curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs \
+      | sh -s -- -y --default-toolchain stable --profile minimal -c rustfmt -c clippy
+ENV PATH="/root/.cargo/bin:${PATH}"
+# Garde-fou licences (cargo deny) + génération des avis tiers (cargo about).
+# cargo-about ≥ 0.9 : le binaire requiert la feature `cli`.
+RUN cargo install cargo-deny --locked \
+    && cargo install cargo-about --locked --features cli
+RUN curl -fsSL https://deb.nodesource.com/setup_22.x | bash - \
+    && apt-get install -y nodejs && corepack enable
+WORKDIR /work

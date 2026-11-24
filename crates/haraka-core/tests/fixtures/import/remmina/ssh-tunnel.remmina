@@ -1,0 +1,9 @@
+[remmina]
+name=Internal via gateway
+protocol=SSH
+server=10.1.2.3
+username=ops
+ssh_tunnel_enabled=1
+ssh_tunnel_server=gw.example.net:2200
+ssh_tunnel_username=gwuser
+group=Production

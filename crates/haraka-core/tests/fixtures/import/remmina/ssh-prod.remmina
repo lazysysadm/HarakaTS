@@ -1,0 +1,12 @@
+[remmina]
+name=Prod web
+protocol=SSH
+server=web.prod.example.net:2222
+username=ops
+password=BASE64ENCRYPTEDBLOB==
+group=Production/Web
+ssh_privatekey=~/.ssh/id_prod
+ssh_auth=1
+colordepth=32
+window_maximize=1
+unknown_future_key=whatever

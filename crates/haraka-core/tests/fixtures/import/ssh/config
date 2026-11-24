@@ -1,0 +1,58 @@
+# Configuration anonymisée — exemple réaliste
+Include config.d/*.conf
+Include ~/.ssh/does-not-exist.d/*
+
+Host bastion
+    HostName bastion.example.net
+    Port 2222
+    User jump
+    IdentityFile %d/.ssh/id_bastion
+    IdentitiesOnly yes
+
+Host web1 web2
+    HostName %h.prod.example.net
+    ProxyJump bastion
+    LocalForward 8080 localhost:80
+    LocalForward 127.0.0.1:5432 db.internal:5432
+    RemoteForward 9000 localhost:9000
+    DynamicForward 1080
+
+Host db1
+    HostName 10.0.0.12
+    ProxyJump jump1@gw1.example.net:2200,bastion
+    Port=2201
+
+Host *.lab !lab-secret.lab
+    User labuser
+
+Host lab-a.lab lab-secret.lab
+    HostName 192.0.2.10
+
+Host legacy
+    HostName legacy.example.net
+    ProxyCommand ssh -W %h:%p bastion
+    Port notaport
+
+Host nomatch-*.zzz
+    User nobody
+
+Match host *.corp exec "test -f /tmp/x"
+    User corpuser
+    HostName ignored.example.net
+
+Host quoted
+    HostName "quoted host.example.net"
+    IdentityFile "~/.ssh/id with space"   # trailing comment
+
+Host sneaky
+    HostName sneaky.example.net
+    ProxyJump none
+
+# Défauts globaux (en fin de fichier : première valeur gagne dans OpenSSH)
+Host *
+    ServerAliveInterval 30
+    User deploy
+    IdentityFile ~/.ssh/id_ed25519
+    Compression yes
+    ForwardAgent no
+    AddKeysToAgent yes

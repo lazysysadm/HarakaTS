@@ -1,0 +1,10 @@
+[Desktop Entry]
+Version=1.0
+Type=Application
+Name=HarakaTS
+GenericName=SSH/SFTP connection manager
+Comment={{comment}}
+Exec={{exec}}
+Icon={{icon}}
+Terminal=false
+Categories={{categories}}

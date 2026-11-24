@@ -1,0 +1,37 @@
+[package]
+name = "harakats"
+description = "Gestionnaire de connexions SSH/SFTP avec coffre chiffré portable"
+version.workspace = true
+authors.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[build-dependencies]
+tauri-build = { version = "2", features = [] }
+pkg-config = "0.3"
+
+[dependencies]
+tauri = { version = "2", features = [] }
+haraka-core = { path = "../crates/haraka-core" }
+haraka-ssh = { path = "../crates/haraka-ssh" }
+encoding_rs = "0.8"
+serde.workspace = true
+serde_json.workspace = true
+secrecy.workspace = true
+zeroize.workspace = true
+uuid.workspace = true
+tokio.workspace = true
+tracing.workspace = true
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+rfd = "0.18"
+arboard = { version = "3.7", default-features = false, features = ["wayland-data-control"] }
+
+[target.'cfg(target_os = "linux")'.dependencies]
+zbus = { version = "6", default-features = false, features = ["tokio"] }
+futures-util = "0.3"
+# Même lignée gtk-rs 0.18 que Tauri (links = "gtk-3" unifié) — moteur VTE natif.
+gtk = "0.18"
+
+[dev-dependencies]
+tempfile = "3"

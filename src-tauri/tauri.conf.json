@@ -1,0 +1,74 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "haraka-ts",
+  "version": "1.0.9",
+  "identifier": "com.harakats.desktop",
+  "mainBinaryName": "harakats",
+  "build": {
+    "beforeDevCommand": "pnpm --dir ui dev",
+    "devUrl": "http://localhost:1420",
+    "beforeBuildCommand": "pnpm --dir ui build",
+    "frontendDist": "../ui/dist"
+  },
+  "app": {
+    "windows": [
+      {
+        "label": "main",
+        "title": "HarakaTS",
+        "width": 1280,
+        "height": 800,
+        "minWidth": 940,
+        "minHeight": 600,
+        "maximized": false,
+        "visible": false
+      }
+    ],
+    "security": {
+      "csp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; connect-src 'self' ipc: http://ipc.localhost; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'none'"
+    }
+  },
+  "bundle": {
+    "active": true,
+    "targets": ["deb", "rpm"],
+    "icon": [
+      "icons/32x32.png",
+      "icons/128x128.png",
+      "icons/128x128@2x.png",
+      "icons/icon.png"
+    ],
+    "category": "Utility",
+    "license": "MIT",
+    "licenseFile": "../LICENSE",
+    "resources": ["../THIRD-PARTY-LICENSES.md"],
+    "shortDescription": "Gestionnaire SSH/SFTP à coffre chiffré portable",
+    "longDescription": "HarakaTS — gestionnaire de connexions distantes SSH/SFTP pour Linux : arbre de connexions hérité, identifiants partagés, terminal natif GTK+VTE, SFTP, édition distante, tunnels, multi-exec, imports (ssh_config, Remmina, MobaXterm). Coffre chiffré portable : un export réimporté ailleurs retrouve tous les secrets sans ressaisie.",
+    "publisher": "LazySysAdmin",
+    "linux": {
+      "deb": {
+        "desktopTemplate": "packaging/haraka-ts.desktop",
+        "depends": [
+          "libwebkit2gtk-4.1-0",
+          "libgtk-3-0",
+          "libsoup-3.0-0",
+          "libjavascriptcoregtk-4.1-0",
+          "libglib2.0-0",
+          "libvte-2.91-0"
+        ]
+      },
+      "rpm": {
+        "epoch": 0,
+        "release": "1",
+        "desktopTemplate": "packaging/haraka-ts.desktop",
+        "obsoletes": ["HarakaTS"],
+        "depends": [
+          "webkit2gtk4.1",
+          "javascriptcoregtk4.1",
+          "gtk3",
+          "libsoup3",
+          "glib2",
+          "vte291"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,19 @@
+{
+  "name": "harakats-workspace",
+  "private": true,
+  "version": "1.0.9",
+  "type": "module",
+  "packageManager": "pnpm@12.21.0",
+  "scripts": {
+    "tauri": "tauri",
+    "dev": "tauri dev",
+    "build": "tauri build",
+    "ui:install": "pnpm --dir ui install",
+    "check": "pnpm --dir ui check",
+    "lint": "pnpm --dir ui lint",
+    "test": "pnpm --dir ui test"
+  },
+  "devDependencies": {
+    "@tauri-apps/cli": "2.12.6"
+  }
+}

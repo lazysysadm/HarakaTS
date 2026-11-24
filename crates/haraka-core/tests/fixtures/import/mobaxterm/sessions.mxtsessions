@@ -1,0 +1,23 @@
+﻿[Bookmarks]
+SubRep=
+ImgNum=42
+Top server=#109#0%top.example.net%22%root%%-1%-1%%%%%0%0%0%%%
+
+[Bookmarks_1]
+SubRep=Production\Web
+ImgNum=41
+web 1=#109#0%web1.example.net%2222%<default>%%-1%-1
+rdp desktop=#91#4%win.example.net%3389%admin%
+web 1=#109#0%web1b.example.net%22%deploy%%-1
+nohost=#109#0%%22%root
+
+[Bookmarks_2]
+SubRep=Production\DB
+ImgNum=41
+db=#109#0%db.example.net%22%postgres%
+telnet=#98#1%old.example.net%23%
+garbage line without value
+junk=notasession
+
+[Passwords]
+root@top.example.net=SECRETENC

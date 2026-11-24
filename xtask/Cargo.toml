@@ -1,0 +1,14 @@
+[package]
+name = "xtask"
+description = "Tâches de build HarakaTS : génération des icônes et des fixtures de format"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+publish = false
+
+[dependencies]
+haraka-core = { path = "../crates/haraka-core" }
+secrecy.workspace = true
+serde_json.workspace = true
+uuid.workspace = true

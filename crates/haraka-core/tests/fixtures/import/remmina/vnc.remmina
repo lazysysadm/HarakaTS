@@ -1,0 +1,4 @@
+[remmina]
+name=Screen
+protocol=VNC
+server=vnc.example.net:5900

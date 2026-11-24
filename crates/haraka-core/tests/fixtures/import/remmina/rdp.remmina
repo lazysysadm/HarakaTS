@@ -1,0 +1,6 @@
+[remmina]
+name=Windows box
+protocol=RDP
+server=win.example.net
+username=Administrator
+password=ENCRYPTED

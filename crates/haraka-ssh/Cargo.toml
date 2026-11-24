@@ -1,0 +1,28 @@
+[package]
+name = "haraka-ssh"
+description = "Backend de session SSH de HarakaTS : connexion, auth, host keys, jump hosts, shell (jalon M3)"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+
+[dependencies]
+haraka-core = { path = "../haraka-core" }
+russh = "0.65.2"
+russh-sftp = "3.0.1"
+sha2 = "0.10"
+notify = "8"
+tokio = { workspace = true, features = ["net", "io-util", "time", "sync", "rt", "macros", "fs"] }
+secrecy.workspace = true
+zeroize.workspace = true
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tracing.workspace = true
+uuid.workspace = true
+base64.workspace = true
+
+[dev-dependencies]
+tempfile = "3"
+rand = { version = "0.10", features = ["thread_rng"] }
+tokio = { workspace = true, features = ["full"] }

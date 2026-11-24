@@ -1,0 +1,15 @@
+## Composants Rust (cargo)
+
+Avis et textes de licence des dépendances Rust intégrées au binaire.
+Généré par `cargo about` via `cargo run -p xtask -- licenses` — ne pas éditer.
+
+{{#each licenses}}
+### {{name}}
+
+Utilisé par : {{#each used_by}}`{{crate.name}} {{crate.version}}`{{#unless @last}}, {{/unless}}{{/each}}
+
+```text
+{{text}}
+```
+
+{{/each}}

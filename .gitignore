@@ -1,0 +1,13 @@
+/target
+/node_modules
+/ui/dist
+/ui/node_modules
+/src-tauri/gen/schemas
+*.hrk
+*.hrkx
+!tests/fixtures/*.hrk
+!tests/fixtures/*.hrkx
+*.log
+/.pnpm-store
+/.qwen
+/crates/haraka-ssh/tests/sshd/run/

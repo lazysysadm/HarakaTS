@@ -1,0 +1,40 @@
+# Garde-fou licences — CI : `cargo deny check licenses`.
+# Le projet est MIT : on n'accepte que des licences permissives compatibles.
+# Tout copyleft fort (GPL/AGPL/LGPL en statique) ou licence inconnue fait
+# échouer la CI. Les libs système LGPL (GTK/VTE/WebKit) sont liées
+# DYNAMIQUEMENT via les paquets distro : elles ne passent pas par cargo.
+
+[licenses]
+allow = [
+    "MIT",
+    "Apache-2.0",
+    # Exception LLVM = permission supplémentaire (linking), permissif.
+    "Apache-2.0 WITH LLVM-exception",
+    "ISC",
+    "BSD-2-Clause",
+    "BSD-3-Clause",
+    "CC0-1.0",
+    "0BSD",
+    "MIT-0",
+    "Unicode-DFS-2016",
+    "Unicode-3.0",
+    "Zlib",
+    "BSL-1.0",
+    # Copyleft faible au niveau fichier (option-ext via dirs) : utilisé non
+    # modifié, compatible avec la distribution MIT (avis conservé).
+    "MPL-2.0",
+]
+confidence-threshold = 0.8
+
+[licenses.private]
+# Crates du workspace (publish = false) : licence MIT du workspace.package.
+ignore = true
+
+[bans]
+multiple-versions = "warn"
+wildcards = "deny"
+
+[advisories]
+# cargo-audit est lancé séparément en CI ; on ne double pas ici.
+version = 2
+ignore = []
