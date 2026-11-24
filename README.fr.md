@@ -1,5 +1,13 @@
 # HarakaTS
 
+[![CI](https://github.com/lazysysadm/HarakaTS/actions/workflows/ci.yml/badge.svg)](https://github.com/lazysysadm/HarakaTS/actions/workflows/ci.yml)
+[![Release](https://img.shields.io/github/v/release/lazysysadm/HarakaTS)](https://github.com/lazysysadm/HarakaTS/releases/latest)
+[![License: MIT](https://img.shields.io/github/license/lazysysadm/HarakaTS)](LICENSE)
+![Platform: Linux](https://img.shields.io/badge/platform-Linux-informational)
+![Rust](https://img.shields.io/badge/Rust-stable-orange?logo=rust)
+![Tauri 2](https://img.shields.io/badge/Tauri-2-24C8DB?logo=tauri)
+![Svelte 5](https://img.shields.io/badge/Svelte-5-FF3E00?logo=svelte)
+
 🇬🇧 [English version](README.md) · 🇫🇷 Français
 
 📚 Documentation anglaise : [Sécurité](SECURITY.en.md) · [Architecture](ARCHITECTURE.en.md) · [Guide utilisateur](MODE_D_EMPLOI.en.md) · [Format d'export](EXPORT_FORMAT.en.md) · [Feuille de route](ROADMAP.en.md) · [Builder maintenant](build_now.en.md) · [Fonctionnement SSH](FONCTIONNEMENT_SSH.en.md)
