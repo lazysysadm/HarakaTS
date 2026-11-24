@@ -103,7 +103,7 @@ projet) :
 ```bash
 podman build -t local/harakats-dev -f packaging/Containerfile packaging/
 podman run --rm -it --name harakats-dev \
-  -v /opt/PROJECTS_AI/HarakaTS:/work:z \
+  -v "$PWD":/work:z \
   -v harakats-cargo-registry:/root/.cargo/registry \
   -v harakats-cargo-git:/root/.cargo/git \
   -v harakats-pnpm-store:/root/.local/share/pnpm/store \
@@ -137,7 +137,7 @@ des crates et compilation (~10–20 min) ; les suivants sont incrémentaux.
 Sur l'hôte, lancer l'app produite (bloc unique) :
 
 ```bash
-/opt/PROJECTS_AI/HarakaTS/target/release/harakats
+target/release/harakats
 ```
 
 (En dev itératif : `cargo build` puis `target/debug/harakats`. Les paquets produits :

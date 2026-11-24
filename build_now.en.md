@@ -3,7 +3,7 @@
 Operational tutorial (2026-11-20). Principle: **everything compiles inside a Podman
 container** (Rust + Node, nothing is installed on the OS), **the GUI app runs on the Fedora
 host** with the produced binary/package. No command below needs root, except the host
-package installation (done by you, once).
+package installation (done by you, once). Run every command from the project root (the folder that contains `Cargo.toml`).
 
 ---
 
@@ -25,7 +25,7 @@ The `local/harakats-dev` image (Debian bookworm + Rust stable + Node 22 + GTK/We
 libs + test sshd) is built from `packaging/Containerfile`:
 
 ```bash
-podman build -t local/harakats-dev /opt/PROJECTS_AI/HarakaTS/packaging
+podman build -t local/harakats-dev ./packaging
 ```
 
 First time: ~5–10 min (downloads). The named volumes `harakats-cargo-registry`,
@@ -39,7 +39,7 @@ then produces the **.deb + .rpm** packages. This is the block used at every mile
 must end with `Finished 2 bundles` without any error:
 
 ```bash
-podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v /opt/PROJECTS_AI/HarakaTS:/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
+podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v "$PWD":/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
 set -e
 bash crates/haraka-ssh/tests/sshd/setup.sh
 export HARAKA_SSHD_TEST=1 HARAKA_TEST_KEY=/work/crates/haraka-ssh/tests/sshd/run/client_ed25519 HARAKA_TEST_USER=harakats-test HARAKA_TEST_PORT=2222
@@ -78,7 +78,7 @@ Duration: first build ~10–20 min; incremental ~2–6 min.
 never to deliver):
 
 ```bash
-podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v /opt/PROJECTS_AI/HarakaTS:/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
+podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v "$PWD":/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
 set -e
 cargo run -p xtask -- all
 pnpm install
@@ -100,7 +100,7 @@ of the root `Cargo.toml`; `cargo run -p xtask -- version check|sync|set X.Y.Z` a
 Fedora reinstall + launch with logs (single block):
 
 ```bash
-sudo dnf reinstall -y /opt/PROJECTS_AI/HarakaTS/target/release/bundle/rpm/haraka-ts-0.8.0-1.x86_64.rpm
+sudo dnf reinstall -y target/release/bundle/rpm/haraka-ts-0.8.0-1.x86_64.rpm
 RUST_LOG=harakats=debug,info harakats 2>/tmp/harakats.log
 ```
 
@@ -109,7 +109,7 @@ RUST_LOG=harakats=debug,info harakats 2>/tmp/harakats.log
 - Logs go to `/tmp/harakats.log` (stderr) — this is the file to send for diagnostics. No
   secret is written there.
 - Launch without logs: `harakats`. Raw binary without installation:
-  `/opt/PROJECTS_AI/HarakaTS/target/release/harakats`.
+  `target/release/harakats`.
 - Virgin test profile (separate vault): `harakats --data-dir /tmp/harakats-profilB`.
 
 ## 5. What "green" means

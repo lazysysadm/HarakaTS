@@ -3,7 +3,7 @@
 Tutoriel opérationnel (2026-11-20). Principe : **tout se compile dans un conteneur
 Podman** (Rust + Node, rien n'est installé sur l'OS), **l'app graphique tourne sur
 l'hôte** Fedora avec le binaire/paquet produit. Aucune commande ci-dessous n'a
-besoin de root, sauf l'installation des paquets hôte (faite par toi, une fois).
+besoin de root, sauf l'installation des paquets hôte (faite par toi, une fois). Lance toutes les commandes depuis la racine du projet (le dossier qui contient `Cargo.toml`).
 
 ---
 
@@ -25,7 +25,7 @@ L'image `local/harakats-dev` (Debian bookworm + Rust stable + Node 22 + libs GTK
 + sshd de test) se construit depuis `packaging/Containerfile` :
 
 ```bash
-podman build -t local/harakats-dev /opt/PROJECTS_AI/HarakaTS/packaging
+podman build -t local/harakats-dev ./packaging
 ```
 
 Première fois : ~5–10 min (téléchargements). Les volumes nommés
@@ -39,7 +39,7 @@ UI), puis produit les paquets **.deb + .rpm**. C'est le bloc utilisé à chaque
 jalon ; il doit finir sur `Finished 2 bundles` sans aucune erreur :
 
 ```bash
-podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v /opt/PROJECTS_AI/HarakaTS:/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
+podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v "$PWD":/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
 set -e
 bash crates/haraka-ssh/tests/sshd/setup.sh
 export HARAKA_SSHD_TEST=1 HARAKA_TEST_KEY=/work/crates/haraka-ssh/tests/sshd/run/client_ed25519 HARAKA_TEST_USER=harakats-test HARAKA_TEST_PORT=2222
@@ -78,7 +78,7 @@ Durée : premier build ~10–20 min ; incrémental ~2–6 min.
 itération, jamais pour livrer) :
 
 ```bash
-podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v /opt/PROJECTS_AI/HarakaTS:/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
+podman run --rm --name harakats-m3 -e COREPACK_ENABLE_DOWNLOAD_PROMPT=0 -v "$PWD":/work:z -v harakats-cargo-registry:/root/.cargo/registry -v harakats-cargo-git:/root/.cargo/git -v harakats-pnpm-store:/root/.local/share/pnpm/store -w /work local/harakats-dev bash -c '
 set -e
 cargo run -p xtask -- all
 pnpm install
@@ -100,7 +100,7 @@ aligne `package.json` ×2 et `tauri.conf.json`, vérifié en CI) :
 Réinstallation Fedora + lancement avec logs (bloc unique) :
 
 ```bash
-sudo dnf reinstall -y /opt/PROJECTS_AI/HarakaTS/target/release/bundle/rpm/haraka-ts-0.8.0-1.x86_64.rpm
+sudo dnf reinstall -y target/release/bundle/rpm/haraka-ts-0.8.0-1.x86_64.rpm
 RUST_LOG=harakats=debug,info harakats 2>/tmp/harakats.log
 ```
 
@@ -109,7 +109,7 @@ RUST_LOG=harakats=debug,info harakats 2>/tmp/harakats.log
 - Les logs partent dans `/tmp/harakats.log` (stderr) — c'est le fichier à envoyer
   en cas de diagnostic. Aucun secret n'y est écrit.
 - Lancement sans logs : `harakats`. Binaire brut sans installation :
-  `/opt/PROJECTS_AI/HarakaTS/target/release/harakats`.
+  `target/release/harakats`.
 - Profil de test vierge (coffre séparé) : `harakats --data-dir /tmp/harakats-profilB`.
 
 ## 5. Ce que « vert » veut dire
